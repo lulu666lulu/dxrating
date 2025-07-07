@@ -59,13 +59,17 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: dxrating
-          directory: apps/web/dist
-          # Optional: Enable this if you want to have GitHub Deployments triggered
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+      # - name: Publish to Cloudflare Pages
+      #   uses: cloudflare/pages-action@v1
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     projectName: dxrating
+      #     directory: apps/web/dist
+      #     # Optional: Enable this if you want to have GitHub Deployments triggered
+      #     gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: main
+      - name: Deploy to EdgeOne Pages
+        run: npx edgeone pages deploy apps/web/dist -n dxrating -t ${{ secrets.EDGEONE_API_TOKEN }}
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
